@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>QR Redirect</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+</head>
+<body>
+Redirecting...
+
+<script>
+    const { createClient } = supabase;
+
+    const client = createClient(
+        "https://xoinvyrxuqkfijindstp.supabase.co",
+        "sb_publishable__rtGNRVn0dhwAE1Q0PIy6Q_L0fsxm3N"
+    );
+
+    const params = new URLSearchParams(location.search);
+    const id = params.get("id");
+
+    function isSafeURL(url){
+        try {
+            const u = new URL(url);
+            return u.protocol === "http:" || u.protocol === "https:";
+        } catch(e) {
+            return false;
+        }
+    }
+
+    async function go() {
+        const { data, error } = await client
+            .from("qrs")
+            .select("*")
+            .eq("id", id)
+            .single();
+
+        if(error || !data){
+            alert("QR 정보를 가져올 수 없습니다.");
+            return;
+        }
+
+        await client
+            .from("qrs")
+            .update({ scan_count: (data.scan_count || 0) + 1 })
+            .eq("id", id);
+
+        if(isSafeURL(data.url)){
+            location.href = data.url;
+        } else {
+            alert("유효하지 않은 URL입니다.");
+        }
+    }
+
+    go();
+</script>
+</body>
+</html>
