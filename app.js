@@ -54,7 +54,7 @@ async function loadQR(){
         const qrDiv = document.createElement("div")
         qrDiv.className="qr-small"
         new QRCode(qrDiv,{
-            text:`r.html?id=${item.id}`,
+            text:`http://jwqr.kro.kr/r.html?id=${item.id}`,
             width:70,
             height:70
         })
@@ -143,7 +143,7 @@ function showQR(item){
 
     const qr = document.createElement("div")
     new QRCode(qr,{
-        text:`r.html?id=${item.id}`,
+        text:`http://jwqr.kro.kr/r.html?id=${item.id}`,
         width:260,
         height:260
     })
