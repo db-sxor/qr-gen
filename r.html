@@ -11,7 +11,7 @@ Redirecting...
 <script>
     const { createClient } = supabase;
 
-    const client = createClient(
+    const client = createClient (
         "https://xoinvyrxuqkfijindstp.supabase.co",
         "sb_publishable__rtGNRVn0dhwAE1Q0PIy6Q_L0fsxm3N"
     );
@@ -19,7 +19,7 @@ Redirecting...
     const params = new URLSearchParams(location.search);
     const id = params.get("id");
 
-    function isSafeURL(url){
+    function isSafeURL(url) {
         try {
             const u = new URL(url);
             return u.protocol === "http:" || u.protocol === "https:";
@@ -35,7 +35,7 @@ Redirecting...
             .eq("id", id)
             .single();
 
-        if(error || !data){
+        if(error || !data) {
             alert("QR 정보를 가져올 수 없습니다.");
             return;
         }
@@ -45,7 +45,7 @@ Redirecting...
             .update({ scan_count: (data.scan_count || 0) + 1 })
             .eq("id", id);
 
-        if(isSafeURL(data.url)){
+        if(isSafeURL(data.url)) {
             location.href = data.url;
         } else {
             alert("유효하지 않은 URL입니다.");
