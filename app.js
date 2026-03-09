@@ -137,17 +137,20 @@ async function loadQR(){
 db
 .channel('qr-realtime')
 .on(
-    'postgres_changes',
-    {
-        event: '*',
-        schema: 'public',
-        table: 'qrs'
-    },
-    (payload) => {
-        loadQR()
-    }
+  'postgres_changes',
+  {
+    event: '*',
+    schema: 'public',
+    table: 'qrs'
+  },
+  (payload) => {
+    console.log("Realtime event:", payload)
+    loadQR()
+  }
 )
-.subscribe()
+.subscribe((status)=>{
+  console.log("Realtime status:",status)
+})
 
 function showQR(item){
     const modal = document.createElement("div")
