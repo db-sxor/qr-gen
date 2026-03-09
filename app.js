@@ -144,13 +144,10 @@ db
     table: 'qrs'
   },
   (payload) => {
-    console.log("Realtime event:", payload)
     loadQR()
   }
 )
-.subscribe((status)=>{
-  console.log("Realtime status:",status)
-})
+.subscribe
 
 function showQR(item){
     const modal = document.createElement("div")
