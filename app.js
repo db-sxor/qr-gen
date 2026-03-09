@@ -134,6 +134,21 @@ async function loadQR(){
     lucide.createIcons()
 }
 
+db
+.channel('qr-realtime')
+.on(
+    'postgres_changes',
+    {
+        event: '*',
+        schema: 'public',
+        table: 'qrs'
+    },
+    (payload) => {
+        loadQR()
+    }
+)
+.subscribe()
+
 function showQR(item){
     const modal = document.createElement("div")
     modal.className = "modal"
